@@ -15,7 +15,9 @@ import com.ibm.watson.developer_cloud.visual_recognition.v3.model.ClassifyOption
 public class Recognition02_main {
 	public static	void main(String[] orgs) {
 		VisualRecognition service = new VisualRecognition("2018-03-19");
-		service.setApiKey("j16014");
+		service.setApiKey("J16014");
+
+		MySQL mysql = new MySQL();
 
 		InputStream imagesStream = null;
 		try {
@@ -48,23 +50,25 @@ public class Recognition02_main {
 			String classifier_id = node.get("images").get(0).get("classifiers").get(0).get("classifier_id").asText();
 			System.out.println("classifier_id : " + classifier_id);
 
-			String classes_class0 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(0).get("class").asText();
+			String classes_class0 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(0).get("class").toString();
 			System.out.println("classes_class : " + classes_class0);
 
-			float classes_score0 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(0).get("score").floatValue();
+			double classes_score0 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(0).get("score").asDouble();
 			System.out.println("classes_score : " + classes_score0);
 
-			String classes_class1 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(1).get("class").asText();
+			String classes_class1 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(1).get("class").toString();
 			System.out.println("classes_class : " + classes_class1);
 
-			float classes_score1 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(1).get("score").floatValue();
+			double classes_score1 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(1).get("score").asDouble();
 			System.out.println("classes_score : " + classes_score1);
 
-			String classes_class2 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(2).get("class").asText();
+			String classes_class2 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(2).get("class").toString();
 			System.out.println("classes_class : " + classes_class2);
 
-			float classes_score2 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(2).get("score").floatValue();
+			double classes_score2 = node.get("images").get(0).get("classifiers").get(0).get("classes").get(2).get("score").asDouble();
 			System.out.println("classes_score : " + classes_score2);
+
+			mysql.updateImage(classes_class0 , classes_score0 , classes_class1 , classes_score1 , classes_class2 , classes_score2);
 
 
 		} catch (IOException e) {
